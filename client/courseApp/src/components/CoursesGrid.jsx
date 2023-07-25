@@ -5,7 +5,7 @@ function CoursesGrid(){
     const[courses, setCourses] = useState([])
 
     useEffect(() =>{
-        fetch("http://localhost:3000/courses")
+        fetch("http://localhost:3000/admin/courses")
         .then((res)=> res.json()
             .then((data)=> {
                 console.log(data)
