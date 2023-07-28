@@ -2,15 +2,11 @@ import { useEffect, useState } from "react"
 import App from "../App"
 import { json } from "react-router-dom"
 
-function CoursesGrid(){
+function AllCoursesGrid(){
     const[courses, setCourses] = useState([])
 
     useEffect(() =>{
-        fetch("http://localhost:3000/admin/courses", {
-            headers: {
-                "Authorization": "bearer " + localStorage.getItem("token")
-            }
-        }).then((res)=> res.json()
+        fetch("http://localhost:3000/all/users").then((res)=> res.json()
             .then((data)=> {
                 console.log(data)
                 setCourses(data.courses)
@@ -39,7 +35,7 @@ function Course(props){
     )
 }
 
-export default CoursesGrid
+export default AllCoursesGrid
 
 // {"courses":[{"_id":"6e","title":"f","description":"bl","price":599,"published":false,"__v":0}]}
 //[{"_id":"64","title":"f","description":"b","price":599,"published":false,"__v":0}]
