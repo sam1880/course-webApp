@@ -4,14 +4,15 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-function SignIn(){
+
+function UserSignup(){
     const[email, setEmail] = useState("")
     const[password, setPassword] = useState("")
 
     return(
         <div>
             <div style={{display: "Flex", justifyContent: "center"}}>
-            <Typography style={{marginTop: 200}}>sign in bellow</Typography>
+                <Typography style={{marginTop: 200}}>sign up bellow</Typography>
             </div>
             <div style={{display: "flex", justifyContent: "center",}}>
             <Card style={{display: "flex", justifyContent: "center", flexDirection: "column", width: 400, padding: 20}} variant="outlined">
@@ -29,19 +30,19 @@ function SignIn(){
                 </TextField>
                 <br/>
                 <Button variant="text"
-                    onClick={() =>{
-                        fetch("http://localhost:3000/admin/signin", {
-                            method: "POST",
-                            body: JSON.stringify({
-                                username: email,
-                                password: password
-                            }),
-                            headers:{
-                                'Content-Type': 'application/json',
-                            }
-                        }).then((res) => res.json().then((data) => {console.log(data); localStorage.setItem("token", data.token); window.location = "/courses" } ))
-                    }}
-                >Sign in</Button>
+                onClick={()=> {
+                    fetch("http://localhost:3000/user/signup",{
+                        method: "POST",
+                        body:JSON.stringify({
+                            username: email,
+                            password: password
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    }).then(window.location = "/courses")
+                }}
+                >Sign Up</Button>
             </Card>
             </div>
         </div>
@@ -49,4 +50,4 @@ function SignIn(){
     )
 }
 
-export default SignIn
+export default UserSignup

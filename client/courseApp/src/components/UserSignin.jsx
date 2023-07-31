@@ -3,8 +3,10 @@ import Card from '@mui/material/Card';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import {useNavigate} from 'react-router-dom'
 
-function SignIn(){
+function UserSignin(){
+    const navigate = useNavigate()
     const[email, setEmail] = useState("")
     const[password, setPassword] = useState("")
 
@@ -30,7 +32,7 @@ function SignIn(){
                 <br/>
                 <Button variant="text"
                     onClick={() =>{
-                        fetch("http://localhost:3000/admin/signin", {
+                        fetch("http://localhost:3000/user/signin", {
                             method: "POST",
                             body: JSON.stringify({
                                 username: email,
@@ -49,4 +51,4 @@ function SignIn(){
     )
 }
 
-export default SignIn
+export default UserSignin

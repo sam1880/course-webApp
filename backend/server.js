@@ -32,9 +32,9 @@ const adminSchema = new mongoose.Schema({
 
 const courseSchema = new mongoose.Schema({
     title: String,
-    description: String,
+    description: String, 
+    image: String,
     price: Number,
-    imageLink: String,
     published: Boolean
 })
 
@@ -71,6 +71,7 @@ const authenticateJwtAdmin = (req, res, next) =>{
             }
             
             req.user = user;
+            console.log(req.user.user)
             next();
         })
     }
@@ -129,10 +130,11 @@ app.post("/admin/signup", async (req, res) => {
 })
 
 app.post("/admin/signin", async (req, res) =>{
-    const {username, password} = req.headers;
+    const {username, password} = req.body;
     const admin = await Admin.findOne({username, password});
     if(admin){
-        const token = generateJwtAdmin(admin)
+        console.log({username})
+        const token = generateJwtAdmin(username)
         res.json({message: 'logged in successfully', token})
     }
     else{
@@ -161,6 +163,20 @@ app.get("/admin/courses", authenticateJwtAdmin, async (req, res) =>{
     res.json({courses})
 })
 
+app.get("/admin/me", authenticateJwtAdmin, async (req,res) =>{
+    res.json({username: req.user.user})
+})
+
+app.get("/admin/course/:id", authenticateJwtAdmin, async(req, res)=>{
+    const courseId = req.params.id
+    const course = await Course.findById(courseId)
+    res.json({course})
+})
+
+app.get("/all/users", async (req,res) =>{
+    const courses = await Course.find({published: true})
+    res.json({courses})
+})
 //USER
 // const userAuthentication = (req,res, next) =>{
 //     const {username, password} = req.headers;

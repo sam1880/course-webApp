@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react"
 import App from "../App"
-import { json } from "react-router-dom"
+import { json, useNavigate } from "react-router-dom"
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
+import { Button, Hidden } from "@mui/material";
+import TextField from '@mui/material/TextField';
 
 function AllCoursesGrid(){
+    const navigate = useNavigate()
     const[courses, setCourses] = useState([])
 
     useEffect(() =>{
@@ -14,23 +19,48 @@ function AllCoursesGrid(){
                 )
             )
     },[])
+
     return(
         <div>
-            {courses.map(course =>{
-                return(
-                    <div key={course._id}>
-                        <Course course={course}/>
-                    </div>
-                    )
-            })}
+            <div style={{display: "flex", justifyContent: "space-between"}}>
+                <img src="https://i.pinimg.com/736x/cd/ef/11/cdef1143220f9cb370b629a6bbdc7282.jpg"
+                style={{
+                    objectFit: "cover",
+                    height: 500,
+                    width: 700,
+                }}
+                />
+                <div style={{position: "relative", top: 200, right: 100}}>
+                    <Typography variant="h3">are you a teacher?</Typography>
+                    <Button 
+                    style={{margin: 20, left:90, minWidth: 150, minHeight: 50, fontSize: 20}}
+                    variant="contained"
+                    >register</Button>
+                </div>
+            </div>
+
+            <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+                {courses.map(course =>{
+                    return(
+                        <div 
+                            onClick={()=> navigate("/course/" + course._id)} key={course._id}>
+                            <Course course={course}/>
+                        </div>
+                        )
+                })}
+            </div>
         </div>
     )
 }
 
 function Course(props){
     return(
-        <div>
-            {props.course.title}
+        <div style={{ margin: "10px",}}>
+            <Card style={{display: "flex", flexWrap: "wrap", flexDirection:"column", alignItems:"center"}}>
+                <img src={props.course.image} style={{width: 200, minHeight: 200}}></img>
+                <Typography>{props.course.title}</Typography>
+                <Typography>{props.course.description}</Typography>
+            </Card>
         </div>
     )
 }

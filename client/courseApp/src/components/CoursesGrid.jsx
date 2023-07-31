@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react"
 import App from "../App"
-import { json } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import Card from '@mui/material/Card';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import CloseIcon from '@mui/icons-material/Close';
 
 function CoursesGrid(){
     const[courses, setCourses] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() =>{
         fetch("http://localhost:3000/admin/courses", {
@@ -18,11 +24,13 @@ function CoursesGrid(){
                 )
             )
     },[])
+
     return(
-        <div>
+        <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
             {courses.map(course =>{
                 return(
-                    <div key={course._id}>
+                    <div 
+                        onClick={()=> navigate("/course/" + course._id)} key={course._id}>
                         <Course course={course}/>
                     </div>
                     )
@@ -33,8 +41,12 @@ function CoursesGrid(){
 
 function Course(props){
     return(
-        <div>
-            {props.course.title}
+        <div style={{ margin: "10px",}}>
+            <Card style={{display: "flex", flexWrap: "wrap", flexDirection:"column", alignItems:"center"}}>
+                <img src={props.course.image} style={{width: 200, minHeight: 200}}></img>
+                <Typography>{props.course.title}</Typography>
+                <Typography>{props.course.description}</Typography>
+            </Card>
         </div>
     )
 }

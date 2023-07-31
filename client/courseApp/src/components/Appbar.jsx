@@ -9,23 +9,24 @@ function Appbar(){
     const navigate = useNavigate()
     const [loading, setLoading] = useState(true)
 
-    useEffect(()=>{
-        fetch("http://localhost:3000/admin/me", {
-            headers:{
-                "Authorization": "bearer " + localStorage.getItem("token")
-            }
-        }).then((res)=> res.json()
-        .then(data => {
-            if(data){
-                setUsername(data.username)
-                setLoading(false)
-            }
-            setLoading(false);
-        }).catch(() => {
-            setUsername(null); // Reset username if the API call fails or user is not logged in
-            setLoading(false);
-          }))
-    }, [])
+        useEffect(()=>{
+                fetch("http://localhost:3000/admin/me", {
+                headers:{
+                    "Authorization": "bearer " + localStorage.getItem("token")
+                }
+            }).then((res)=> res.json()
+            .then(data => {
+                if(data){
+                    setUsername(data.username)
+                    setLoading(false)
+                }
+                setLoading(false);
+            }).catch(() => {
+                setUsername(null); // Reset username if the API call fails or user is not logged in
+                setLoading(false);
+              }))
+            
+        }, [])
 
     if(loading){
         return(
@@ -35,25 +36,27 @@ function Appbar(){
 
     if(username){
         return(
-            <div style={{display: "flex", justifyContent: "space-between"}}>
-                
-                <Typography>Course Shop</Typography>
-                <div>{username}</div>
+            <div style={{backgroundColor: '#EAEAEA'}}>
+            <div style={{display: "flex", justifyContent: "space-between", }}>
+                <Typography onClick={()=> navigate("/courses")} style={{margin: 15}}>Course Shop</Typography>
+                <Typography style={{margin: 15}}>{username}</Typography>
                 <div>
-                    <Button onClick={() => {window.location = "/signin"; localStorage.setItem("token", null)}}>logout</Button>
+                    <Button style={{margin: 10}} onClick={() => {localStorage.setItem("token", null);  window.location = "/home"}}>logout</Button>
                 </div>
             </div>
+            </div>
+
         )
     }
     
     return(
-        <div style={{display: "flex", justifyContent: "space-between"}}>
+        <div style={{display: "flex", justifyContent: "space-between", backgroundColor: '#EAEAEA'}}>
             
-            <Typography>Course Shop</Typography>
+            <Typography onClick={()=> {navigate("/home")}} style={{margin: 15}}>Course Shop</Typography>
             <div>{username}</div>
             <div>
-                <Button onClick={() => navigate('/SignIn')}>Sign In</Button>
-                <Button onClick={()=> navigate('/SignUp')}>Sign Up</Button>
+                <Button style={{margin: 10}} onClick={() => navigate('/SignIn')}>Sign In</Button>
+                <Button style={{margin: 10}} onClick={()=> navigate('/SignUp')}>Sign Up</Button>
             </div>
         </div>
     )

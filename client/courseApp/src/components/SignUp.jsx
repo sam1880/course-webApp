@@ -40,7 +40,7 @@ function SignUp(){
                         headers: {
                             'Content-Type': 'application/json',
                         }
-                    }).then(window.location = "/")
+                    }).then(window.location = "/courses")
                 }}
                 >Sign Up</Button>
             </Card>
