@@ -254,8 +254,8 @@ app.get("/user/course/:id", authenticateJwtUser, async(req, res) =>{
 })
 
 app.get("/user/purchasedcourses", authenticateJwtUser, async (req, res) =>{
-    console.log(req.user.username)
-    const user = await User.findOne({username: req.user.username}).populate('purchasedCourses')
+    console.log(req.user.user)
+    const user = await User.findOne({username: req.user.user}).populate('purchasedCourses')
     if(user){
         res.json({purchasedCourses: user.purchasedCourses || [] })
     }
