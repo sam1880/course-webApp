@@ -205,7 +205,7 @@ app.post("/user/signup", async (req, res) =>{
 })
 
 app.post("/user/signin", async (req, res) =>{
-    const {username, password} = req.headers;
+    const {username, password} = req.body;
     const user = await User.findOne({username, password});
     if(user){
         token = generateJwtUser(username)
@@ -224,11 +224,19 @@ app.get("/user/courses", authenticateJwtUser, async (req, res) =>{
 app.post("/user/courses/:id", authenticateJwtUser, async (req,res)=>{
     const course = await Course.findById(req.params.id);
     if(course){
-        const user = await User.findOne({username: req.user.username});
+        const user = await User.findOne({username: req.user.user});
+        console.log(user)
         if(user){
-            user.purchasedCourses.push(course)
-            await user.save();
-            res.json({message: 'course purchased successfully'});
+            const courseExist = await user.purchasedCourses.includes(req.params.id)
+            if(!courseExist){
+                user.purchasedCourses.push(course)
+                await user.save();
+                res.json({message: 'course purchased successfully'});
+            }
+            else{
+                res.json({message: "course already bought"})
+            }
+            
         }
         else{
             res.status(403).json({message: "user not found"})
@@ -237,6 +245,12 @@ app.post("/user/courses/:id", authenticateJwtUser, async (req,res)=>{
     else{
         res.status(404).json({message: 'course not found'})
     }
+})
+
+app.get("/user/course/:id", authenticateJwtUser, async(req, res) =>{
+    const courseId = req.params.id
+    const course = await Course.findById(courseId)
+    res.json({course})
 })
 
 app.get("/user/purchasedcourses", authenticateJwtUser, async (req, res) =>{
@@ -249,5 +263,9 @@ app.get("/user/purchasedcourses", authenticateJwtUser, async (req, res) =>{
         res.status(403).json({message: 'user not found'})
     }
 });
+
+app.get("/user/me", authenticateJwtUser, async (req,res) =>{
+    res.json({username: req.user.user})
+})
 
 app.listen(PORT, () => console.log(`server is running at ${PORT}`))
