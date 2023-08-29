@@ -3,45 +3,31 @@ import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
 import {useNavigate} from 'react-router-dom'
 import { useState } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { isUserLoadingState } from '../store/selectors/isUserLoading';
+import { userEmailState } from '../store/selectors/userEmail';
+import { userState } from '../store/atoms/user';
 
 function Appbar(){
-    const [username, setUsername] = useState(null)
     const navigate = useNavigate()
-    const [loading, setLoading] = useState(true)
+    const userLoading = useRecoilValue(isUserLoadingState)
+    const userEmail = useRecoilValue(userEmailState)
+    const setUser = useSetRecoilState(userState)
 
-        useEffect(()=>{
-                fetch("http://localhost:3000/admin/me", {
-                headers:{
-                    "Authorization": "bearer " + localStorage.getItem("token")
-                }
-            }).then((res)=> res.json()
-            .then(data => {
-                if(data){
-                    setUsername(data.username)
-                    setLoading(false)
-                }
-                setLoading(false);
-            }).catch(() => {
-                setUsername(null); // Reset username if the API call fails or user is not logged in
-                setLoading(false);
-              }))
-            
-        }, [])
-
-    if(loading){
+    if(userLoading){
         return(
             <div></div>
         )
     }
 
-    if(username){
+    if(userEmail){
         return(
             <div style={{backgroundColor: '#EAEAEA'}}>
             <div style={{display: "flex", justifyContent: "space-between", }}>
                 <Typography onClick={()=> navigate("/courses")} style={{margin: 15}}>Course Shop</Typography>
-                <Typography style={{margin: 15}}>{username}</Typography>
+                <Typography style={{margin: 15}}>{userEmail}</Typography>
                 <div>
-                    <Button style={{margin: 10}} onClick={() => {localStorage.setItem("token", null);  window.location = "/home"}}>logout</Button>
+                    <Button style={{margin: 10}} onClick={() => {localStorage.setItem("token", null);  window.location = "/home"; setUser({isLoading: false, userEmail: null})}}>logout</Button>
                 </div>
             </div>
             </div>
@@ -53,7 +39,7 @@ function Appbar(){
         <div style={{display: "flex", justifyContent: "space-between", backgroundColor: '#EAEAEA'}}>
             
             <Typography onClick={()=> {navigate("/home")}} style={{margin: 15}}>Course Shop</Typography>
-            <div>{username}</div>
+            <div>{userEmail}</div>
             <div>
                 <Button style={{margin: 10}} onClick={() => navigate('/SignIn')}>Sign In</Button>
                 <Button style={{margin: 10}} onClick={()=> navigate('/SignUp')}>Sign Up</Button>
