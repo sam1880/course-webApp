@@ -27,16 +27,35 @@ function AllCoursesGrid(){
                 style={{
                     objectFit: "cover",
                     height: 500,
-                    width: 700,
+                    width: 750,
                 }}
                 />
-                <div style={{position: "relative", top: 200, right: 100}}>
+                <div style={{position: "relative", top: 200, right: 100, maxHeight: 100}}>
                     <Typography variant="h3">are you a teacher?</Typography>
                     <Button 
-                    style={{margin: 20, left:90, minWidth: 150, minHeight: 50, fontSize: 20}}
+                    style={{margin: 20, left:90, maxWidth: 150, maxHeight: 50, fontSize: 20}}
                     variant="contained"
+                    onClick={()=> navigate("/signup")}
                     >register</Button>
                 </div>
+            </div>
+            <div style={{display: "flex", justifyContent: "space-between"}}>
+                <div style={{position: "relative", top: 200, left: 100}}>
+                    <Typography variant="h3">are you a student?</Typography>
+                    <Button 
+                    style={{margin: 20, left:90, maxWidth: 150, maxHeight: 50, fontSize: 20}}
+                    variant="contained"
+                    onClick={()=> window.open("http://localhost:5174/signup")}
+                    >register</Button>
+                </div>
+                <img src="https://i.pinimg.com/736x/cd/ef/11/cdef1143220f9cb370b629a6bbdc7282.jpg"
+                    style={{
+                        position: "relative",
+                        objectFit: "cover",
+                        height: 500,
+                        width: 750,
+                    }}
+                    />
             </div>
 
             <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
@@ -57,9 +76,9 @@ function Course(props){
     return(
         <div style={{ margin: "10px",}}>
             <Card style={{display: "flex", flexWrap: "wrap", flexDirection:"column", alignItems:"center"}}>
-                <img src={props.course.image} style={{width: 200, minHeight: 200}}></img>
+                <img src={props.course.image} style={{width: 200, maxHeight: 250, objectFit: "cover"}}></img>
                 <Typography>{props.course.title}</Typography>
-                <Typography>{props.course.description}</Typography>
+                <Typography>{props.course.price}</Typography>
             </Card>
         </div>
     )

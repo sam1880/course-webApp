@@ -27,7 +27,7 @@ function Appbar(){
                 <Typography onClick={()=> navigate("/courses")} style={{margin: 15}}>Course Shop</Typography>
                 <Typography style={{margin: 15}}>{userEmail}</Typography>
                 <div>
-                    <Button style={{margin: 10}} onClick={() => {localStorage.setItem("token", null);  window.location = "/home"; setUser({isLoading: false, userEmail: null})}}>logout</Button>
+                    <Button style={{margin: 10}} onClick={() => {localStorage.setItem("token", null);  window.location = "/"; setUser({isLoading: false, userEmail: null})}}>logout</Button>
                 </div>
             </div>
             </div>
@@ -38,7 +38,7 @@ function Appbar(){
     return(
         <div style={{display: "flex", justifyContent: "space-between", backgroundColor: '#EAEAEA'}}>
             
-            <Typography onClick={()=> {navigate("/home")}} style={{margin: 15}}>Course Shop</Typography>
+            <Typography onClick={()=> {if(userEmail){navigate("courses")} else{navigate("/")}}} style={{margin: 15}}>Course Shop</Typography>
             <div>{userEmail}</div>
             <div>
                 <Button style={{margin: 10}} onClick={() => navigate('/SignIn')}>Sign In</Button>

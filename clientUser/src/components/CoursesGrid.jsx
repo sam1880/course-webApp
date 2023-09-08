@@ -42,7 +42,7 @@ function Course(props){
     return(
         <div style={{ margin: "10px",}}>
             <Card style={{display: "flex", flexWrap: "wrap", flexDirection:"column", alignItems:"center"}}>
-                <img src={props.course.image} style={{width: 200, minHeight: 200}}></img>
+                <img src={props.course.image} style={{width: 200, maxHeight: 250, objectFit: "cover"}}></img>
                 <Typography>{props.course.title}</Typography>
                 <Typography>{props.course.description}</Typography>
             </Card>

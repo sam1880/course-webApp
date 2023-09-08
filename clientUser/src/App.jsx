@@ -16,6 +16,7 @@ function App() {
       <Router>
         <Appbar/>
         <Routes>
+          <Route path ='/' element={<Signin/>}/>
           <Route path='/courses' element ={<CoursesGrid/>}/>
           <Route path='/signin' element={<Signin/>}/>
           <Route path='/signup' element={<Signup/>}/>

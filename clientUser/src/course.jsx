@@ -9,6 +9,7 @@ function Course(){
     const navigate = useNavigate()
     const [purchasedCoursesData, setPurchasedCourses] = useState([])
     const [loading, setLoading] = useState(true)
+    const [bought, setBought] = useState('BUY')
 
     useEffect(()=>{
         fetch("http://localhost:3000/user/course/" + id,{
@@ -45,7 +46,7 @@ function Course(){
                 <div style={{display: "flex"}}>
                     <div style={{ display: "flex", flexWrap: 'wrap', flexDirection:"column", alignItems: "right", minHeight: 700,
                         flex: "1", position: "fixed", top: 57, right: 0, bottom: 0, padding: "20px", backgroundColor: "#FAFAFA"}}>
-                        <img src={course.image}></img>
+                        <img src={course.image} style={{width: 200, maxHeight: 250, objectFit: "cover"}}></img>
                         <Typography>{course.title}</Typography>
                         <Typography>{course.price}</Typography>
                         <Button onClick={() => {
@@ -54,7 +55,7 @@ function Course(){
                             headers:{
                                 "Authorization": "bearer " + localStorage.getItem("token")
                             }
-                        }).then((res) => res.json().then((data) => console.log(data)))}} variant="outlined">DETAILS</Button>
+                        }).then((res) => res.json().then((data) => {console.log(data)}))}} variant="outlined">DETAILS</Button>
                     </div>
                     <div style={{position: "relative",flex: "2", marginRight: "350px", marginTop: 30, marginLeft:20, overflow: "auto"}}>
                         <Typography>{course.description}</Typography>
@@ -66,7 +67,7 @@ function Course(){
             <div style={{display: "flex"}}>
                 <div style={{ display: "flex", flexWrap: 'wrap', flexDirection:"column", alignItems: "right", minHeight: 700,
                     flex: "1", position: "fixed", top: 57, right: 0, bottom: 0, padding: "20px", backgroundColor: "#FAFAFA"}}>
-                    <img src={course.image}></img>
+                    <img src={course.image} style={{width: 200, maxHeight: 250, objectFit: "cover"}}></img>
                     <Typography>{course.title}</Typography>
                     <Typography>{course.price}</Typography>
                     <Button onClick={() => {
@@ -75,7 +76,7 @@ function Course(){
                         headers:{
                             "Authorization": "bearer " + localStorage.getItem("token")
                         }
-                    }).then((res) => res.json().then((data) => console.log(data)))}} variant="outlined">BUY</Button>
+                    }).then((res) => res.json().then((data) => {console.log(data); setBought('DETAILS')}))}} variant="outlined">{bought}</Button>
                 </div>
                 <div style={{position: "relative",flex: "2", marginRight: "350px", marginTop: 30, marginLeft:20, overflow: "auto"}}>
                     <Typography>{course.description}</Typography>

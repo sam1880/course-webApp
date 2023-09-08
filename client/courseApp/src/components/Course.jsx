@@ -23,7 +23,7 @@ function Course(){
             <div style={{display: "flex"}}>
                 <div style={{ display: "flex", flexWrap: 'wrap', flexDirection:"column", alignItems: "right", minHeight: 700,
                     flex: "1", position: "fixed", top: 57, right: 0, bottom: 0, padding: "20px", backgroundColor: "#FAFAFA"}}>
-                    <img src={course.image}></img>
+                    <img src={course.image} style={{maxwidth: 250, maxHeight: 350, objectFit: 'cover'}}></img>
                     <Typography>{course.title}</Typography>
                     <Typography>{course.price}</Typography>
                     <Button onClick={()=> navigate("/courses/edit/" + course._id)} variant="outlined">EDIT</Button>
